@@ -18,7 +18,7 @@ echo INSTALLING CODECS
 sudo dnf groupupdate multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 sudo dnf groupupdate sound-and-video
 
-sudo dnf install thunderbird -y#install vs code
+#install vs code
 echo INSTALLING VS CODE
 cd ~/Downloads
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
@@ -39,7 +39,8 @@ code --install-extension aaron-bond.better-comments
 
 #install spotify (flatpak)
 echo INSTALLING SPOTIFY
-sudo flatpak install flathub com.spotify.Client
+sudo dnf install lpf-spotify-client
+lpf update
 
 #install postman (flatpak)
 echo INSTALLING POSTMAN
@@ -47,7 +48,7 @@ flatpak install flathub com.getpostman.Postman
 
 #install discord
 echo INSTALLING DISCORD
-flatpak install flathub com.discordapp.Discord
+sudo dnf install discord
 
 #install thunderbird
 echo INSTALLING THUNDERBIRD
@@ -70,6 +71,15 @@ cd ~/Downloads
 wget https://launchpad.net/veracrypt/trunk/1.25.9/+download/veracrypt-1.25.9-CentOS-8-x86_64.rpm
 sudo dnf install veracrypt-1.25.9-CentOS-8-x86_64.rpm
 
+#install nodejs
+echo INSTALLING NODEJS
+sudo dnf install nodejs
 
-
-
+#install android studio
+echo INSTALLING ANDROID STUDIO
+sudo dnf install -y zlib.i686 ncurses-libs.i686 bzip2-libs.i686
+cd /tmp
+wget https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2021.2.1.15/android-studio-2021.2.1.15-linux.tar.gz
+sudo tar -zxvf android-studio-*-linux.tar.gz
+sudo mv android-studio /opt/
+sudo ln -sf /opt/android-studio/bin/studio.sh /usr/local/bin/android-studio
