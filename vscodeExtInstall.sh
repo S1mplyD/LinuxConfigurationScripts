@@ -6,3 +6,9 @@ code --install-extension llvm-vs-code-extensions.vscode-clangd
 code --install-extension PKief.material-icon-theme
 code --install-extension Tomi.xajssnippets
 code --install-extension aaron-bond.better-comments
+code --install-extension octref.vetur
+code --install-extension msjsdiag.vscode-react-native
+code --install-extension mikestead.dotenv
+code --install-extension ecmel.vscode-html-css
+code --install-extension dsznajder.es7-react-js-snippets
+code --install-extension abusaidm.html-snippets
