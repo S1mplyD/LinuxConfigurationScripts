@@ -89,3 +89,16 @@ wget https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2021.2.1.15/andr
 sudo tar -zxvf android-studio-*-linux.tar.gz
 sudo mv android-studio /opt/
 sudo ln -sf /opt/android-studio/bin/studio.sh /usr/local/bin/android-studio
+
+#install umps3 emulator
+echo INSTALLING UMPS3 EMULATOR
+mkdir ~/Github
+cd ~/Github
+sudo dnf install git make gcc-c++ cmake qt5-qtbase-devel qt5-qtsvg elfutils-libelf-devel boost-devel libsigc++20-devel gcc-mips64-linux-gnu
+git clone https://github.com/virtualsquare/umps3
+cd umps3
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
