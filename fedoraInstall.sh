@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#Configure DNF
+echo CONFIGURING DNF
+printf 'max_parallel_downloads=5\ndefaultyes=True\nkeepcache=True' | sudo tee -a /etc/dnf/dnf.conf
+
 #update system
 echo UPDATING SYSTEM
 sudo dnf update
@@ -102,3 +106,13 @@ cd build
 cmake ..
 make
 sudo make install
+
+#install zsh and oh my zsh
+echo INSTALLING ZSH
+sudo dnf install zsh
+echo INSTALLING oh my zsh
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+chsh -s /bin/zsh
+
+echo INSTALLATION AND CONFIGURATION DONE, REBOOTING
+sudo reboot now
