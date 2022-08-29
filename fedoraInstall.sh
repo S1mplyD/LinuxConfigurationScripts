@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo SYSTEM CONFIGURATION
+
 #Configure DNF
 echo CONFIGURING DNF
 printf 'max_parallel_downloads=5\ndefaultyes=True\nkeepcache=True' | sudo tee -a /etc/dnf/dnf.conf
@@ -22,35 +24,42 @@ echo INSTALLING CODECS
 sudo dnf groupupdate multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 sudo dnf groupupdate sound-and-video
 
-#install vs code
-echo INSTALLING VS CODE
-cd ~/Downloads
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-dnf check-update
-sudo dnf install code
+#install zsh
+echo INSTALLING ZSH
+sudo dnf install zsh
+echo INSTALLING oh my zsh
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+chsh -s /bin/zsh
+zsh
+
+echo PACKAGES INSTALLATION
+
+#install vs codium
+echo INSTALLING VS CODIUM
+sudo rpmkeys --import https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+printf "[gitlab.com_paulcarroty_vscodium_repo]\nname=download.vscodium.com\nbaseurl=https://download.vscodium.com/rpms/\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg\nmetadata_expire=1h" | sudo tee -a /etc/yum.repos.d/vscodium.repo
+sudo dnf install codium
 
 #install vs code extensions
-echo INSTALLING VS CODE EXTENSION
-code --install-extension ahmadawais.shades-of-purple
-code --install-extension CoenraadS.bracket-pair-colorizer-2
-code --install-extension esbenp.prettier-vscode
-code --install-extension Gruntfuggly.todo-tree
-code --install-extension llvm-vs-code-extensions.vscode-clangd
-code --install-extension PKief.material-icon-theme
-code --install-extension Tomi.xajssnippets
-code --install-extension aaron-bond.better-comments
-code --install-extension octref.vetur
-code --install-extension msjsdiag.vscode-react-native
-code --install-extension mikestead.dotenv
-code --install-extension ecmel.vscode-html-css
-code --install-extension dsznajder.es7-react-js-snippets
-code --install-extension abusaidm.html-snippets
+echo INSTALLING VS CODIUM EXTENSION
+codium --install-extension CoenraadS.bracket-pair-colorizer-2
+codium --install-extension esbenp.prettier-vscode
+codium --install-extension Gruntfuggly.todo-tree
+codium --install-extension llvm-vs-code-extensions.vscode-clangd
+codium --install-extension PKief.material-icon-theme
+codium --install-extension Tomi.xajssnippets
+codium --install-extension aaron-bond.better-comments
+codium --install-extension octref.vetur
+codium --install-extension msjsdiag.vscode-react-native
+codium --install-extension mikestead.dotenv
+codium --install-extension ecmel.vscode-html-css
+codium --install-extension dsznajder.es7-react-js-snippets
+codium --install-extension abusaidm.html-snippets
 
 #install spotify (flatpak)
 echo INSTALLING SPOTIFY
-sudo dnf install lpf-spotify-client
-lpf update
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+sudo flatpak install flathub com.spotify.Client
 
 #install postman (flatpak)
 echo INSTALLING POSTMAN
@@ -66,14 +75,13 @@ sudo dnf install thunderbird -y
 
 #install telegram
 echo INSTALLING TELEGRAM
-sudo dnf install telegram
+sudo dnf install telegram-desktop
 
-#install brave browser
-echo INSTALLING BRAVE BROWSER
-sudo dnf install dnf-plugins-core
-sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
-sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-sudo dnf install brave-browser
+#install google chrome
+echo INSTALLING GOOGLE CHROME
+sudo dnf install fedora-workstation-repositories
+sudo dnf config-manager --set-enabled google-chrome
+sudo dnf install google-chrome-stable
 
 #install veracrypt
 echo INSTALLING VERACRYPT
@@ -82,37 +90,26 @@ wget https://launchpad.net/veracrypt/trunk/1.25.9/+download/veracrypt-1.25.9-Cen
 sudo dnf install veracrypt-1.25.9-CentOS-8-x86_64.rpm
 
 #install nodejs
-echo INSTALLING NODEJS
-sudo dnf install nodejs
+echo INSTALLING NVM
+sudo dnf install curl
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+source ~/.bashrc
+source ~/.zshrc
 
-#install android studio
-echo INSTALLING ANDROID STUDIO
-sudo dnf install -y zlib.i686 ncurses-libs.i686 bzip2-libs.i686
-cd /tmp
-wget https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2021.2.1.15/android-studio-2021.2.1.15-linux.tar.gz
-sudo tar -zxvf android-studio-*-linux.tar.gz
-sudo mv android-studio /opt/
-sudo ln -sf /opt/android-studio/bin/studio.sh /usr/local/bin/android-studio
+#install node 17.5.0
+echo INSTALLING NODEJS 17.5.0
+nvm install 17.5.0
 
-#install umps3 emulator
-echo INSTALLING UMPS3 EMULATOR
-mkdir ~/Github
-cd ~/Github
-sudo dnf install git make gcc-c++ cmake qt5-qtbase-devel qt5-qtsvg elfutils-libelf-devel boost-devel libsigc++20-devel gcc-mips64-linux-gnu
-git clone https://github.com/virtualsquare/umps3
-cd umps3
-mkdir build
-cd build
-cmake ..
-make
-sudo make install
+#install okular
+sudo dnf install okular
 
-#install zsh and oh my zsh
-echo INSTALLING ZSH
-sudo dnf install zsh
-echo INSTALLING oh my zsh
-sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-chsh -s /bin/zsh
+#install filezilla
+sudo dnf install filezilla
+
+#install github desktop
+cd ~/Downloads
+wget https://github.com/shiftkey/desktop/releases/download/release-3.0.5-linux1/GitHubDesktop-linux-3.0.5-linux1.rpm
+sudo dnf install GitHubDesktop-linux-3.0.5-linux1.rpm
 
 echo INSTALLATION AND CONFIGURATION DONE, REBOOTING
 sudo reboot now
