@@ -1,6 +1,8 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
+
+
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
@@ -9,14 +11,13 @@ return require('packer').startup(function(use)
         -- or                            , branch = '0.1.x',
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
-    use({
-        "ChristianChiarulli/onedark.nvim",
-        as = "onedark",
-        config = function()
-            vim.cmd("colorscheme onedark")
-        end
-    })
-
+    -- use({
+    --     "ChristianChiarulli/onedark.nvim",
+    --     as = "onedark",
+    --     config = function()
+    --         vim.cmd("colorscheme onedark")
+    --     end
+    -- })
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
@@ -68,4 +69,11 @@ return require('packer').startup(function(use)
     use 'mbbill/undotree'
 
     use "tpope/vim-fugitive"
+
+    use { "catppuccin/nvim", as = "catppuccin",}
+
+    use {
+        "folke/todo-comments.nvim",
+        requires={{"nvim-lua/plenary.nvim"}, {"folke/trouble.nvim"}}
+    }
 end)
