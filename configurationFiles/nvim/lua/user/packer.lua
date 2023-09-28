@@ -1,8 +1,6 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-
-
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
@@ -70,10 +68,13 @@ return require('packer').startup(function(use)
 
     use "tpope/vim-fugitive"
 
-    use { "catppuccin/nvim", as = "catppuccin",}
-
+    -- use { "catppuccin/nvim", as = "catppuccin",}
+    use {
+        'uloco/bluloco.nvim',
+        requires = { 'rktjmp/lush.nvim' }
+    }
     use {
         "folke/todo-comments.nvim",
-        requires={{"nvim-lua/plenary.nvim"}, {"folke/trouble.nvim"}}
+        requires = { { "nvim-lua/plenary.nvim" }, { "folke/trouble.nvim" } }
     }
 end)

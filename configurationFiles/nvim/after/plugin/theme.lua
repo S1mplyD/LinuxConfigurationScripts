@@ -1,6 +1,7 @@
-require("catppuccin").setup({
-	flavour="mocha",
-	background="mocha"
-})
-
-vim.cmd.colorscheme "catppuccin"
+-- require("catppuccin").setup({
+-- 	flavour="mocha",
+-- 	background="mocha"
+-- })
+--
+-- vim.cmd.colorscheme "catppuccin"
+--
