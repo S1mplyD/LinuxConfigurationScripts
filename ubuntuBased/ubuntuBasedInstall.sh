@@ -8,7 +8,7 @@ sudo apt update && sudo apt upgrade -y
 #install from apt package manager
 
 echo installing apt software 
-sudo apt install thunderbird telegram-desktop okular nvim vlc btop discord gcc git nnn tmux -y 
+sudo apt install thunderbird telegram-desktop okular neovim vlc btop discord gcc git nnn tmux -y 
 
 #install spotify
 
