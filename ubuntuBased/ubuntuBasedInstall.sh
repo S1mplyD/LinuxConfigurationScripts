@@ -1,46 +1,55 @@
-#!/bin/bash
+#!/bin/zsh
 
 #update system
 
 echo UPDATING SYSTEM
-sudo apt update && sudo apt upgrade
+sudo apt update && sudo apt upgrade -y
 
 #install from apt package manager
 
-echo INSTALLING thunderbird telegram-desktop okular vim vlc bashtop zsh discord alacritty
-sudo apt install thunderbird telegram-desktop okular vim vlc bashtop zsh discord alacritty
-
-#install google chrome
-
-echo INSTALLING google-chrome-stable
-cd ~/Downloads
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb
-
-#install veracrypt
-
-echo INSTALLING veracrypt
-cd ~/Downloads
-wget https://launchpadlibrarian.net/601954341/veracrypt-1.25.9-Ubuntu-22.04-amd64.deb
-sudo dpkg -i veracrypt-1.25.9-Ubuntu-22.04-amd64.deb
-
-#install vs codium
-
-echo INSTALLING vscodium
-wget -qO - https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
-    | gpg --dearmor \
-    | sudo dd of=/usr/share/keyrings/vscodium-archive-keyring.gpg
-echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
-    | sudo tee /etc/apt/sources.list.d/vscodium.list
-sudo apt update && sudo apt install codium
-
-#install code extensions
-sudo chmod +x vscodeExtInstall.sh
-./vscodeExtInstall.sh
+echo installing apt software 
+sudo apt install thunderbird telegram-desktop okular nvim vlc btop discord gcc git nnn tmux -y 
 
 #install spotify
 
-echo INSTALLING spotify
+echo installing spotify
 curl -sS https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg | sudo apt-key add -
 echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-sudo apt-get update && sudo apt-get install spotify-client
+sudo apt-get update && sudo apt-get install spotify-client -y
+
+#install brave browser
+
+echo installing brave-browser
+sudo apt install curl -y
+sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo apt update -y
+sudo apt install brave-browser -y
+
+#install ohmyzsh
+echo installing ohmyzsh and plugins
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+#install nvm
+echo installing nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+#install github desktop
+echo installing github desktop
+wget -qO - https://apt.packages.shiftkey.dev/gpg.key | gpg --dearmor | sudo tee /usr/share/keyrings/shiftkey-packages.gpg > /dev/null
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/shiftkey-packages.gpg] https://apt.packages.shiftkey.dev/ubuntu/ any main" > /etc/apt/sources.list.d/shiftkey-packages.list'
+sudo apt update && sudo apt install github-desktop -y
+
+#install mongodb compass
+echo install mongodb compass
+wget -P /home/luca/Downloads/ https://downloads.mongodb.com/compass/mongodb-compass_1.42.0_amd64.deb
+sudo dpkg -i ~/Downloads/mongodb*.deb
+
+#install postman
+echo installing postman
+wget -P ~/Downloads/ https://dl.pstmn.io/download/latest/linux_64
+cd ~/Downloads
+tar -xf postman-linux-x64.tar 
+cd Postman
