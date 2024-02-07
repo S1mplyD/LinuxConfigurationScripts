@@ -50,6 +50,6 @@ sudo dpkg -i ~/Downloads/mongodb*.deb
 #install postman
 echo installing postman
 wget -P ~/Downloads/ https://dl.pstmn.io/download/latest/linux_64
-cd ~/Downloads
-tar -xf postman-linux-x64.tar 
-cd Postman
+sudo tar -xzf ~/Downloads/postman-linux-x64.tar.gz -C /opt
+sudo touch /usr/share/applications/Postman.desktop
+echo -e "[Desktop Entry]\nEncoding=UTF-8\nName=Postman\nExec=/opt/Postman/app/Postman %U\nIcon=/opt/Postman/app/resources/app/assets/icon.png\nTerminal=false\nType=Application\nCategories=Development;" > /usr/share/applications/Postman.desktop
